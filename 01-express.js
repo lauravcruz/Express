@@ -8,6 +8,9 @@ app.use(express.static(__dirname + "/public/"));
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views/");
 
+app.use("/", require("./router/rutas"));
+
+app.use('/pokemon', require('./router/pokemon')); 
 app
   .get("/", (req, res) => {
     res.render("index", { titulo: "mi título dinámico" });
@@ -15,13 +18,13 @@ app
   })
   .get("/contacto", (req, res) => {
     res.render("contacto", {
-      tituloContacto: "Estamos en contacto de manera dinámica!"
+      tituloContacto: "Estamos en contacto de manera dinámica!",
     });
   })
   .use((req, res) => {
     res.status(404).render("404", {
       titulo: "Error 404",
-      descripcion: "Page not found"
+      descripcion: "Page not found",
     });
   })
   .listen(3000);
