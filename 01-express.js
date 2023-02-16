@@ -10,7 +10,19 @@ app.set("views", __dirname + "/views/");
 
 app.use("/", require("./router/rutas"));
 
-app.use('/pokemon', require('./router/pokemon')); 
+const mongoose = require("mongoose");
+
+const user = "lauravcruz";
+const password = "cGmE99fABCzWLQ2H";
+const dbname = "pokemon";
+const uri = `mongodb+srv://${user}:${password}@cluster0.maebliy.mongodb.net/${dbname}?retryWrites=true&w=majority`;
+
+app.use("/pokemon", require("./router/pokemon"));
+mongoose
+  .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("Base de datos conectada"))
+  .catch((e) => console.log(e));
+
 app
   .get("/", (req, res) => {
     res.render("index", { titulo: "mi título dinámico" });

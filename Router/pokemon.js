@@ -1,8 +1,16 @@
 const express = require("express");
 const router = express.Router();
+const Pokemon = require("../models/Pokemon");
 
-router.get("/", (req, res) => {
-  res.render("pokemon", {
+router.get("/", async (req, res) => {
+  try {
+    const arrayPokemonDB = await Pokemon.find();
+    console.log(arrayPokemonDB);
+    res.render("pokemon", { arrayPokemon: arrayPokemonDB });
+  } catch (error) {
+    console.log(error);
+  }
+  /*res.render("pokemon", {
     arrayPokemon: [
       {
         id: "0010",
@@ -23,7 +31,7 @@ router.get("/", (req, res) => {
         descripcion: "Qué cosa más mala",
       },
     ],
-  });
+  });*/
 });
 
 module.exports = router;
