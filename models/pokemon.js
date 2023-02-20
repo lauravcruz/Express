@@ -7,7 +7,7 @@ const pokemonSchema = new Schema({
   id: String,
   nombre: String,
   tipo: String,
-  description: String,
+  descripcion: String,
 });
 
 const Pokemon = mongoose.model("Pokemon", pokemonSchema, "pokemon");

@@ -18,13 +18,20 @@
         <td><%= pokemon.nombre %></td>
         <td><%= pokemon.tipo %></td>
         <td><%= pokemon.descripcion %></td>
-        <td>Editar Borrar</td>
+        <td>
+          <a href="pokemon/<%= pokemon._id %>" class="btn btn-warning btn-sm"
+            >Editar/Eliminar</a
+          >
+        </td>
       </tr>
       <tr>
         <% })} %>
       </tr>
     </tbody>
   </table>
+  <a href="/pokemon/crear" class="btn btn-success btn-block my-4"
+    >Crear nuevo Pokémon</a
+  >
 </div>
 
 <%- include("template/footer") %>
