@@ -20,8 +20,16 @@
         <td><%= pokemon.descripcion %></td>
         <td>
           <a href="pokemon/<%= pokemon._id %>" class="btn btn-warning btn-sm"
-            >Editar/Eliminar</a
+            >Editar</a
           >
+          <button
+            id="eliminar<%= pokemon._id %>"
+            class="btn btn-danger btn-sm"
+            data-id="<%=  pokemon._id %>"
+            onclick="deletePokemon(this)"
+          >
+            Eliminar
+          </button>
         </td>
       </tr>
       <tr>
@@ -35,3 +43,24 @@
 </div>
 
 <%- include("template/footer") %>
+
+<script>
+  async function deletePokemon(btn) {
+    const btnEliminar = btn;
+    console.log(btnEliminar.dataset.id);
+    try {
+      const data = await fetch(`/pokemon/${btnEliminar.dataset.id}`, {
+        method: "delete",
+      });
+      const res = await data.json();
+      console.log(res);
+      if (res.estado) {
+        window.location.href = "/pokemon";
+      } else {
+        console.log(res);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+</script>

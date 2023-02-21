@@ -34,6 +34,10 @@ router.get("/", async (req, res) => {
   });*/
 });
 
+router.get("/crear", (req, res) => {
+  res.render("crear");
+});
+
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
 
@@ -75,10 +79,6 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.get("/crear", (req, res) => {
-  res.render("crear");
-});
-
 router.post("/", async (req, res) => {
   const body = req.body; //Gracias al body parser podemos recuperar todo lo que viene del body
   console.log(body);
@@ -90,4 +90,30 @@ router.post("/", async (req, res) => {
     console.log("error", error);
   }
 });
+
+router.put("/:id", async (req, res) => {
+  const id = req.params.id; //coge el id por parámetro
+  const body = req.body; //recoge los campos del formulario
+  console.log(id);
+  console.log("body", body);
+  try {
+    //"esperamos" que encuentre el pokemon y actualice con los datos que le pasamos
+    const pokemonDB = await Pokemon.findByIdAndUpdate(id, body, {
+      useFindAndModify: false,
+    });
+
+    console.log(pokemonDB);
+    res.json({
+      estado: true,
+      mensaje: "Pokémon editado",
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      estado: false,
+      mensaje: "Problema al editar el Pokémon",
+    });
+  }
+});
+
 module.exports = router;
